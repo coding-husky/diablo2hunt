@@ -1,0 +1,98 @@
+﻿<Window x:Class="D2Hunt.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:validationRules="clr-namespace:D2Hunt.App.Data.ValidationRules"
+        mc:Ignorable="d"
+        Height="450" Width="447">
+
+    <Window.Resources>
+        <Style x:Key="ItemContStyle" TargetType="{x:Type ListViewItem}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="CurrentGame" Color="Black" />
+                <SolidColorBrush x:Key="OldGame" Color="DimGray" />
+                <SolidColorBrush x:Key="HotIp" Color="#90be6d" />
+
+                <!--<valueConverters:DelayStatusFormatter x:Key="DelayStatusFormatter" />-->
+            </Style.Resources>
+
+            <Style.Triggers>
+                <!--<DataTrigger Binding="{Binding Delay, Converter={StaticResource DelayStatusFormatter}}" Value="0">
+                    <Setter Property="Foreground" Value="{StaticResource OldGame}" />
+                </DataTrigger>-->
+
+                <DataTrigger Binding="{Binding IsHot}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource HotIp}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HotIpInputStyle" TargetType="{x:Type TextBox}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="Empty" Color="White" />
+                <SolidColorBrush x:Key="InValid" Color="#f94144" />
+                <SolidColorBrush x:Key="Valid" Color="#90be6d" />
+            </Style.Resources>
+
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="Background" Value="{StaticResource InValid}" />
+                </Trigger>
+
+                <Trigger Property="Validation.HasError" Value="false">
+                    <Setter Property="Background" Value="{StaticResource Valid}" />
+                </Trigger>
+
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Background" Value="{StaticResource Empty}" />
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Content="Hot IP:" />
+        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Margin="0,0,5,0" Style="{StaticResource HotIpInputStyle}">
+            <TextBox.Text>
+                <Binding Path="HotIp" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationRules:HotIpValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <ListView Name="ListView" ItemsSource="{Binding GamesHistory }" 
+                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                      Margin="0,5,0,5"
+                      ItemContainerStyle="{StaticResource ItemContStyle}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Width="30" Header="#" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Width="150" Header="Address" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Width="170" Header="Game start" DisplayMemberBinding="{Binding CreatedAt}" />
+                    <GridViewColumn Width="50" Header="Wait" DisplayMemberBinding="{Binding Delay}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Clear" Click="ClearListClickHandle"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Region}" ContentStringFormat="Region: {0}" />
+    </Grid>
+</Window>

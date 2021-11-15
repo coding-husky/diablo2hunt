@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/D2Hunt.App/bin
+/D2Hunt.App/obj
+/.vs/
+/D2Hunt.App/appsettings.*.json
