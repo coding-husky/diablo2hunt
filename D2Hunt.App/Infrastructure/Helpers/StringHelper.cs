@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace D2Hunt.App.Infrastructure.Helpers;
+﻿namespace D2Hunt.App.Infrastructure.Helpers;
 
 public static class StringHelper
 {

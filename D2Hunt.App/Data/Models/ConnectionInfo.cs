@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using D2Hunt.App.Infrastructure.Helpers;
+﻿using D2Hunt.App.Infrastructure.Helpers;
 
 namespace D2Hunt.App.Data.Models;
 

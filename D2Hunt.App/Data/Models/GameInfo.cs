@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace D2Hunt.App.Data.Models;
+﻿namespace D2Hunt.App.Data.Models;
 
 public class GameInfo : BaseObservable
 {

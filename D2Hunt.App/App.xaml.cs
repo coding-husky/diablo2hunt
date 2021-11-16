@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Windows;
+using D2Hunt.App.Infrastructure.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace D2Hunt.App;
 
@@ -15,11 +14,13 @@ public partial class App : Application
     {
         this.serviceProvider = new ServiceCollection().Configure().BuildServiceProvider();
         this.serviceProvider.ConfigureLogging();
+
+        this.Dispatcher.UnhandledException += Dispatcher_UnhandledException;
     }
 
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        Log.ForContext<App>().Information("Application started");
+        Log.ForContext<App>().LogInfo("Application started");
         var mainWindow = serviceProvider.GetService<MainWindow>();
         mainWindow?.Show();
         CheckNewVersion();
@@ -39,20 +40,19 @@ public partial class App : Application
 
                 if (currentVersion < latestVersion)
                 {
-                    var dialogResult = MessageBox.Show("A new version is available. Do you want to download it?", Name, MessageBoxButton.YesNo, MessageBoxImage.Information);
-                    if (dialogResult == MessageBoxResult.Yes)
-                    {
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = "https://github.com/coding-husky/diablo2hunt",
-                            UseShellExecute = true
-                        });
-                    }
+                    MessageBox.Show("A new version is available. Do you want to download it?", Name, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception e)
             {
-                Log.ForContext<App>().Error(e, "Unable to read latest version from server!");
+                Log.ForContext<App>().LogError(e, "Unable to read latest version from server!");
             }
         });
+
+    private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+    {
+        Log.ForContext<App>().LogError(e.Exception, "An unhandled exception occured {Message}", e.Exception.Message);
+        e.Handled = true;
+    }
+
 }

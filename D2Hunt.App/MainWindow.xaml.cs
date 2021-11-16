@@ -1,13 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using D2Hunt.App.Abstraction.Infrastructure;
 using D2Hunt.App.Data.Models;
 using D2Hunt.App.Data.ViewModels;
 using D2Hunt.App.Infrastructure.Helpers;
 using Microsoft.Toolkit.Uwp.Notifications;
-using Serilog;
 
 namespace D2Hunt.App;
 
@@ -71,7 +68,7 @@ public partial class MainWindow : Window
 
             if (newGame.IsHot)
             {
-                Log.ForContext<MainWindow>().Information("Found game with hot IP: {HotIP}", newGame.Address);
+                Log.ForContext<MainWindow>().LogInfo("Found game with hot IP: {HotIP}@{Region}", newGame.Address, model.Region);
                 new ToastContentBuilder()
                     .AddText("You found hot IP game!")
                     .AddText($"IP: {newGame.Address}")

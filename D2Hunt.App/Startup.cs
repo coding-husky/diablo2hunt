@@ -4,8 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using D2Hunt.App.Abstraction.Infrastructure;
 using D2Hunt.App.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using Serilog;
 using System.Reflection;
 
 namespace D2Hunt.App;

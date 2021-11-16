@@ -1,6 +1,6 @@
 ﻿using D2Hunt.App.Abstraction.Data;
 using D2Hunt.App.Abstraction.Infrastructure;
-using Serilog;
+using D2Hunt.App.Infrastructure.Helpers;
 
 namespace D2Hunt.App.Infrastructure.Services;
 
@@ -47,7 +47,7 @@ public class ConnectionScanner : IConnectionScanner
 
                 if (!string.Equals(currentRegion, lastRegion))
                 {
-                    Log.ForContext<ConnectionScanner>().Debug("Found new region: {Region}", currentRegion);
+                    Log.ForContext<ConnectionScanner>().LogDebug("Found new region: {Region}", currentRegion);
                     await onRegionChange(currentRegion);
                     lastRegion = currentRegion;
                 }
@@ -57,7 +57,7 @@ public class ConnectionScanner : IConnectionScanner
                 {
                     if (!string.Equals(currentGameAddress, lastGameAddress) && !string.IsNullOrWhiteSpace(currentGameAddress))
                     {
-                        Log.ForContext<ConnectionScanner>().Debug("Found new game: {GameAddress}", currentGameAddress);
+                        Log.ForContext<ConnectionScanner>().LogDebug("Found new game: {GameAddress}", currentGameAddress);
                         await onNewGameFound(currentGameAddress, DateTime.Now);
                         lastGameAddress = currentGameAddress;
                     }

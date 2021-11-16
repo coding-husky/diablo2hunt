@@ -8,10 +8,21 @@
     <AssemblyName>D2Hunt</AssemblyName>
     <ApplicationIcon>R.ico</ApplicationIcon>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RepositoryUrl>https://github.com/coding-husky/diablo2hunt</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl></RepositoryUrl>
+    <RepositoryType></RepositoryType>
     <AssemblyVersion>1.0</AssemblyVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Authors />
   </PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="Serilog"/>
+		<Using Include="System.Collections.ObjectModel"/>
+		<Using Include="System.ComponentModel"/>
+		<Using Include="System.Text.RegularExpressions"/>
+		<Using Include="System.Windows.Controls"/>		
+	</ItemGroup>
 
   <ItemGroup>
     <Content Include="R.ico" />

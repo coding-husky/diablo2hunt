@@ -1,8 +1,4 @@
-﻿using D2Hunt.App.Data.Models;
-using System.Threading.Tasks;
-using System;
-
-namespace D2Hunt.App.Abstraction.Infrastructure;
+﻿namespace D2Hunt.App.Abstraction.Infrastructure;
 
 public interface IConnectionScanner
 {

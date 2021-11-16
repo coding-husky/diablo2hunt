@@ -1,6 +1,4 @@
 ﻿using D2Hunt.App.Infrastructure.Helpers;
-using Serilog;
-using System.Windows.Controls;
 
 namespace D2Hunt.App.Data.ValidationRules;
 
@@ -17,7 +15,7 @@ public class HotIpValidationRule : ValidationRule
         var result = stringValue.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).All(x => StringHelper.IsValidIpAddress(x));
         if (result)
         {
-            Log.ForContext<HotIpValidationRule>().Information("Validation successful for TextBox with value: {Value}", stringValue);
+            Log.ForContext<HotIpValidationRule>().LogInfo("Validation successful for TextBox with value: {Value}", stringValue);
             return new ValidationResult(true, null);
         }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using D2Hunt.App.Abstraction.Data;
 using D2Hunt.App.Data.Models;
-using Serilog;
+using D2Hunt.App.Infrastructure.Helpers;
 
 namespace D2Hunt.App.Data.Providers;
 
@@ -65,7 +65,7 @@ public class NetstatConnectionsProvider : IConnectionsProvider
         }
         catch (Exception e)
         {
-            Log.ForContext<NetstatConnectionsProvider>().Error(e, "Unable to parse line: {Line}", line);
+            Log.ForContext<NetstatConnectionsProvider>().LogError(e, "Unable to parse line: {Line}", line);
         }
 
         return new();
